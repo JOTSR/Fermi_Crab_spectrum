@@ -11,4 +11,36 @@ You must have the [FermiBottle container](https://github.com/fermi-lat/FermiBott
 
 ## Usage
 
+Datas are aviable on https://fermi.gsfc.nasa.gov/ssc/data/access/
+
+### Fast start
+
+1. In your machine
+    ```sh
+    docker run -it -e HOST_USER_ID=`id -u $USER` -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix -v "`pwd`":/data -p 8888:8888 fssc/fermibottle su fermi -
+    ```
+1. In the container
+    ```sh
+    cd /data
+    git clone https://github.com/JOTSR/Fermi_Crab_spectrum.git
+    conda activate fermi
+    notebook
+    ```
+
+### Full setup
+
+1. Follow the [FermiBottle container doc](https://github.com/fermi-lat/FermiBottle/wiki)
+1. Clone this project in your personal directory
+1. Start conda env
+    ```sh
+    conda activate fermi
+    ```
+1. Start jupyter server in the container 
+   ```sh
+   notebook
+   ```
+1. And connect to remote server (for example with [VSCode](https://code.visualstudio.com/docs/datascience/jupyter-notebooks)).
+
+## Analysis
+
 All the process is detailed in the attached [notebook](./analysis.ipynb)
