@@ -36,3 +36,23 @@ def set_free_xml(xml_path: str, ref_name: str, ceil: float, xml_out_path: str = 
         lock_spectrum(source, False)
 
     xml.write(xml_path if xml_out_path == None else xml_out_path)
+
+def set_value(xml_path: str, ref_name: str, attr_name: str, attr_prop_name: str, attr_prop_value, xml_out_path: str = None):
+    xml = ET.parse(xml_path)
+    root = xml.getroot()
+
+    for source in root.findall("source"):
+        s_name = source.get("name")
+        if type(s_name) != str:
+            continue
+        if ref_name in s_name:
+            prefactor = source.find("spectrum/parameter[@name='{}']".format(attr_name))
+            prefactor.set(attr_prop_name, attr_prop_value)
+            break
+        
+
+    xml.write(xml_path if xml_out_path == None else xml_out_path)
+
+def constrain_value(xml_path: str, ref_name: str, attr_name: str, min: float, max: float, xml_out_path: str = None):
+    set_value(xml_path, ref_name, attr_name, "min", min, xml_out_path)
+    set_value(xml_path, ref_name, attr_name, "max", max, xml_out_path)
